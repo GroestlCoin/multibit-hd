@@ -152,7 +152,7 @@ public enum ExchangeKey {
   public static String exchangeCode(String currencyCode, ExchangeKey exchangeKey) {
 
     // All exchanges quote in BTC over XBT at this time
-    if ("XBT".equalsIgnoreCase(currencyCode)) {
+    /*if ("XBT".equalsIgnoreCase(currencyCode)) {
       return "BTC";
     }
 
@@ -162,7 +162,8 @@ public enum ExchangeKey {
     }
 
     // Default is the ISO code
-    return currencyCode;
+    return currencyCode;*/
+    return "GRS";
   }
 
 }

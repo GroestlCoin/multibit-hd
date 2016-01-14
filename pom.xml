@@ -68,6 +68,10 @@
     <!-- Define the MultiBit staging repository for releases and snapshots -->
     <!-- Use https://rawgithub.com to provide a consistent result -->
     <repository>
+      <id>my</id>
+      <url>file://${user.home}/AppData/.m2/repository</url>
+    </repository>
+    <repository>
       <id>mbhd-maven-release</id>
       <url>https://raw.github.com/bitcoin-solutions/mbhd-maven/master/releases</url>
       <releases/>
@@ -316,9 +320,9 @@
 
     <!-- bitcoinj alice fork -->
     <dependency>
-      <groupId>org.bitcoinj</groupId>
-      <artifactId>bitcoinj-core</artifactId>
-      <version>0.13.3-alice-0.2.0-SNAPSHOT</version>
+      <groupId>com.google</groupId>
+      <artifactId>groestlcoinj</artifactId>
+      <version>0.13.3-alice-0.1.5</version>
     </dependency>
 
     <!-- BRIT Core for managing income -->

@@ -35,7 +35,7 @@ public class WalletConfiguration {
    * The fee per kilobyte of transaction to use in spends
    * Note feePerKB is a long rather than a Coin as Coin does not round trip as is via JSON
    */
-  private long feePerKB = FeeService.DEFAULT_FEE_PER_KB.longValue();
+  private long feePerKB = 0;//FeeService.DEFAULT_FEE_PER_KB.longValue();
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -70,7 +70,7 @@ public class BitcoinNetworkService extends AbstractService {
 
   private static int CONNECTION_TIMEOUT = 4000; // milliseconds
 
-  private static int NUMBER_OF_PEERS_TO_PING = 2;
+  private static int NUMBER_OF_PEERS_TO_PING = 10;
 
   /**
    * The number of blocks to go back for a replay (based on the length of time coinbases need to mature for similar forking reasons)
@@ -78,7 +78,7 @@ public class BitcoinNetworkService extends AbstractService {
   private static int NUMBER_OF_BLOCKS_DELTA_FOR_REPLAY = 120;
 
   // The minimum BRIT fee that the multibit developers charge
-  private static Coin MINIMUM_MULTIBIT_DEVELOPER_FEE = Coin.valueOf(5000); // satoshi
+  private static Coin MINIMUM_MULTIBIT_DEVELOPER_FEE = Coin.valueOf(0); // satoshi
 
   /**
    * The boundary for when more mining fee is due
@@ -662,11 +662,6 @@ public class BitcoinNetworkService extends AbstractService {
 
       // Never send a client fee that is dust
       if (isClientFeeRequired && sendRequestSummary.getFeeState().get().getFeeOwed().isLessThan(Transaction.MIN_NONDUST_OUTPUT)) {
-        isClientFeeRequired = false;
-      }
-
-      // Never send a client fee that is below the minimum multibit developer fee
-      if (isClientFeeRequired && sendRequestSummary.getFeeState().get().getFeeOwed().isLessThan(MINIMUM_MULTIBIT_DEVELOPER_FEE)) {
         isClientFeeRequired = false;
       }
 
@@ -1430,7 +1425,6 @@ public class BitcoinNetworkService extends AbstractService {
         });
 
       log.debug("Initiated broadcast of transaction: '{}'", Utils.HEX.encode(sendRequest.tx.bitcoinSerialize()));
-
       transactionFuture.get();
 
       log.debug("Get of future completed");
@@ -1562,16 +1556,17 @@ public class BitcoinNetworkService extends AbstractService {
    * @param useFastCatchup True if only block headers from genesis block is required
    */
   private void createNewPeerGroup(Wallet wallet, boolean useFastCatchup) throws TimeoutException {
-    String[] dnsSeeds = new String[]{
+    /***String[] dnsSeeds = new String[]{
                      /* "seed.bitcoin.sipa.be",        // Pieter Wuille - not reachable */
-      "dnsseed.bluematt.me",         // Matt Corallo
-      "dnsseed.bitcoin.dashjr.org",  // Luke Dashjr
-      "seed.bitcoinstats.com",       // Chris Decker
-      "seed.bitnodes.io",            // Addy Yeow
-    };
+    //  "dnsseed.bluematt.me",         // Matt Corallo
+    //  "dnsseed.bitcoin.dashjr.org",  // Luke Dashjr
+    //  "seed.bitcoinstats.com",       // Chris Decker
+    //  "seed.bitnodes.io",            // Addy Yeow
+    //};
+
     log.info("Creating new DNS peer group for '{}'", networkParameters);
     peerGroup = new PeerGroup(networkParameters, blockChain);
-    peerGroup.addPeerDiscovery(new DnsDiscovery(dnsSeeds, networkParameters));
+    peerGroup.addPeerDiscovery(new DnsDiscovery(CoinDefinition.dnsSeeds, networkParameters));
     peerGroup.setConnectTimeoutMillis(CONNECTION_TIMEOUT);
 
 

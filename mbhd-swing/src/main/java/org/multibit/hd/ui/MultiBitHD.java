@@ -4,6 +4,8 @@ import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.util.concurrent.Uninterruptibles;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import org.bitcoinj.core.CoinDefinition;
+import org.bitcoinj.core.NetworkParameters;
 import org.multibit.commons.concurrent.SafeExecutors;
 import org.multibit.hd.core.config.Configurations;
 import org.multibit.hd.core.dto.WalletSummary;
@@ -96,7 +98,7 @@ public class MultiBitHD {
     // See also http://stackoverflow.com/a/26829874/396747 for more details on ordering at startup
     // Verified that java.util.Arrays has not been loaded at this stage
     System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
-
+    System.setProperty("sun.security.ssl.allowUnsafeRenegotiation", "true");
     // Fix for Windows / Java 7 / VPN bug
     System.setProperty("java.net.preferIPv4Stack", "true");
 
@@ -120,6 +122,7 @@ public class MultiBitHD {
     LoggingFactory.bootstrap();
 
     // Get the configuration fast (Bitcoin URI processing relies on it)
+
     CoreServices.bootstrap();
 
     // Analyse the command line

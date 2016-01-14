@@ -1408,7 +1408,7 @@ public enum WalletManager implements WalletEventListener {
    * currently owed to BRIT
    */
   public Optional<FeeState> calculateBRITFeeState(boolean includeOneExtraFee) {
-    if (feeService == null) {
+   /** if (feeService == null) {
       feeService = CoreServices.createFeeService();
     }
 
@@ -1427,7 +1427,8 @@ public enum WalletManager implements WalletEventListener {
       return Optional.of(feeState);
     } else {
       return Optional.absent();
-    }
+    }                          **/
+    return Optional.absent();
   }
 
   /**
