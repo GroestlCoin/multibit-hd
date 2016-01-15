@@ -10,6 +10,7 @@ import com.xeiam.xchange.Exchange;
 import com.xeiam.xchange.ExchangeFactory;
 import com.xeiam.xchange.NotAvailableFromExchangeException;
 import com.xeiam.xchange.currency.CurrencyPair;
+
 import com.xeiam.xchange.dto.marketdata.Ticker;
 import org.multibit.commons.concurrent.SafeExecutors;
 import org.multibit.commons.utils.Dates;
@@ -236,7 +237,7 @@ public class ExchangeTickerService extends AbstractService {
   public ListenableFuture<Ticker> latestTicker() {
     // Apply any exchange quirks to the counter code (e.g. ISO "RUB" -> legacy "RUR")
     final String exchangeCounterCode = ExchangeKey.exchangeCode(localCurrency.getCurrencyCode(), exchangeKey);
-    final String exchangeBaseCode = ExchangeKey.exchangeCode("XBT", exchangeKey);
+    final String exchangeBaseCode = ExchangeKey.exchangeCode("GRS", exchangeKey);
 
     // Perform an asynchronous call to the exchange
     return latestTickerExecutorService.submit(
@@ -250,16 +251,16 @@ public class ExchangeTickerService extends AbstractService {
             return getEmptyTicker();
           }
 
-          if (ExchangeKey.OPEN_EXCHANGE_RATES.equals(exchangeKey)) {
+          //if (ExchangeKey.OPEN_EXCHANGE_RATES.equals(exchangeKey)) {
 
             // Triangulate through USD to reach exchange rate
-            return getTriangulatedTicker();
+           // return getTriangulatedTicker();
 
-          } else {
+          //} else {
 
             // Crypto-exchange is straightforward
             return getDirectTicker();
-          }
+          //}
         }
 
         private Ticker getDirectTicker() throws IOException {
@@ -275,8 +276,8 @@ public class ExchangeTickerService extends AbstractService {
 
           log.debug("OER triangulated ticker");
 
-          CurrencyPair localToUsdPair = new CurrencyPair(exchangeCounterCode, "USD");
-          CurrencyPair bitcoinToUsdPair = new CurrencyPair("BTC", "USD");
+          CurrencyPair localToUsdPair = new CurrencyPair(exchangeCounterCode, "BTC");
+          CurrencyPair bitcoinToUsdPair = new CurrencyPair("GRS", "BTC");
 
           // Need to triangulate through USD
           Ticker inverseLocalToUsdTicker = exchange.get().getPollingMarketDataService().getTicker(localToUsdPair);
@@ -339,7 +340,7 @@ public class ExchangeTickerService extends AbstractService {
         public String[] call() throws Exception {
 
           if (ExchangeKey.NONE.equals(exchangeKey)) {
-            return new String[]{"BTC"};
+            return new String[]{"GRS"};
           }
 
           Locale currentLocale = Configurations.currentConfiguration.getLocale();

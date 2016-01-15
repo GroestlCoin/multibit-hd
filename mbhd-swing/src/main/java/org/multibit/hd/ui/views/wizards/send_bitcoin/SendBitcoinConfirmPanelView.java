@@ -290,7 +290,7 @@ public class SendBitcoinConfirmPanelView extends AbstractWizardPanelView<SendBit
     transactionFeeDisplayAmountMaV.getView().updateView(configuration);
 
     // Update the model and view for the client fee
-    Optional<FeeState> feeStateOptional = WalletManager.INSTANCE.calculateBRITFeeState(true);
+    Optional<FeeState> feeStateOptional = WalletManager.INSTANCE.calculateBRITFeeState(false);
     String feeText;
     if (feeStateOptional.isPresent()) {
       FeeState feeState = feeStateOptional.get();

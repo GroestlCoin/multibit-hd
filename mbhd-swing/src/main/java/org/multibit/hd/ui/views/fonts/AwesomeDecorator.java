@@ -22,6 +22,7 @@ import java.io.InputStream;
 public class AwesomeDecorator {
 
   public static final Font AWESOME_FONT;
+  public static final Font GROESTL_FONT;
 
   static {
 
@@ -36,6 +37,20 @@ public class AwesomeDecorator {
     } catch (FontFormatException | IOException e) {
       throw new UIException(e);
     }
+
+    Font font = AWESOME_FONT;
+    GraphicsEnvironment e = GraphicsEnvironment.getLocalGraphicsEnvironment();
+    Font[] fonts = e.getAllFonts(); // Get the fonts
+    for (Font f : fonts) {
+      if(f.getFontName().equals("Arial"))
+        font = f.deriveFont(Font.PLAIN);
+    }
+
+      Preconditions.checkNotNull(font, "Font Awesome not loaded");
+
+      GROESTL_FONT = font.deriveFont(Font.PLAIN, MultiBitUI.NORMAL_ICON_SIZE);
+
+
 
   }
 

@@ -79,7 +79,8 @@ public class AwesomeSwingIcon implements Icon, PropertyChangeListener {
   public AwesomeSwingIcon(JComponent component, Character text, int size, boolean enabled) {
 
     this.component = component;
-
+    if(text.charValue() == AwesomeIcon.BITCOIN.getChar())
+      font = AwesomeDecorator.GROESTL_FONT.deriveFont((float)size);
     font = font.deriveFont((float) size);
     setText(String.valueOf(text));
 

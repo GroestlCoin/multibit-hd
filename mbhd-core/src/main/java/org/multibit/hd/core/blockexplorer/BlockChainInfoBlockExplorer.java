@@ -17,11 +17,11 @@ public class BlockChainInfoBlockExplorer implements BlockExplorer {
 
   @Override
   public String getName() {
-    return "blockchain.info";
+    return "chainz.cryptoid.info/grs/";
   }
 
   @Override
   public MessageFormat getTransactionLookupMessageFormat() {
-    return new MessageFormat("https://blockchain.info/tx-index/{0}");
+    return new MessageFormat("https://chainz.cryptoid.info/grs/tx.dws?{0}.htm");
   }
 }

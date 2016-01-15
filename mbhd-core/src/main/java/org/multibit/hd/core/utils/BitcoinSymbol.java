@@ -25,51 +25,33 @@ public enum BitcoinSymbol {
   /**
    * The Font Awesome icon (becoming a de facto standard)
    */
-  ICON("", "B", BigDecimal.ONE, 8),
+  ICON("", "G", BigDecimal.ONE, 8),
   /**
    * The Font Awesome icon with milli
    */
-  MICON("m", "mB", new BigDecimal(1_000), 5),
+  MICON("m", "mG", new BigDecimal(1_000), 5),
   /**
    * The Font Awesome icon with micro
    */
-  UICON("\u00b5", "\u00b5B", new BigDecimal(1_000_000), 2),
+  UICON("\u00b5", "\u00b5G", new BigDecimal(1_000_000), 2),
   /**
    * The current de facto standard but may be superseded (cannot be an ISO standard)
    */
-  BTC("BTC", "BTC", BigDecimal.ONE, 8),
+  BTC("GRS", "GRS", BigDecimal.ONE, 8),
   /**
    * A milli in the current de facto standard
    */
-  MBTC("mBTC", "mBTC", new BigDecimal(1_000), 5),
+  MBTC("mGRS", "mGRS", new BigDecimal(1_000), 5),
   /**
    * A micro in the current de facto standard
    */
-  UBTC("\u00b5BTC", "\u00b5BTC", new BigDecimal(1_000_000), 2),
+  UBTC("\u00b5GRS", "\u00b5GRS", new BigDecimal(1_000_000), 2),
   /**
    * A possible ISO standard name
    */
-  XBT("XBT", "XBT", BigDecimal.ONE, 8),
-  /**
-   * A milli in a possible ISO standard name
-   */
-  MXBT("mXBT", "mXBT", new BigDecimal(1_000), 5),
-  /**
-   * A micro in a possible ISO standard name
-   */
-  UXBT("\u00b5XBT", "µXBT", new BigDecimal(1_000_000), 2),
   /**
    * The <a href="http://bitcoinsymbol.org">Ecogex alternative symbol</a>
    */
-  ECO("\u0243", "\u0243", BigDecimal.ONE, 8),
-  /**
-   * A milli with the Ecogex alternative symbol
-   */
-  MECO("m\u0243", "m\u0243", new BigDecimal(1_000), 5),
-  /**
-   * A micro with the Ecogex alternative symbol
-   */
-  UECO("\u00b5\u0243", "\u00b5\u0243", new BigDecimal(1_000_000), 2),
 
   /**
    * Subject of much debate (see <a href="http://www.reddit.com/r/Bitcoin/comments/1rmto3/its_bits/">this Reddit article</a>)
@@ -179,19 +161,16 @@ public enum BitcoinSymbol {
     switch (this) {
       case ICON:
       case BTC:
-      case XBT:
-      case ECO:
+
         return "21,000,000.00000000".length();
       case MICON:
       case MBTC:
-      case MXBT:
-      case MECO:
+
         return "21,000,000,000.00000".length();
       case UICON:
       case UBTC:
       case BITS:
-      case UXBT:
-      case UECO:
+
         return "21,000,000,000,000.00".length();
       case SATOSHI:
         return "210,000,000,000,000,000,000".length();

@@ -242,44 +242,44 @@ public class BitcoinNetworkService extends AbstractService {
   private void downloadBlockChainInBackground() {
 
     getExecutorService().submit(
-      new Runnable() {
-        @Override
-        public void run() {
-          Preconditions.checkNotNull(peerGroup, "'peerGroup' must be present");
+            new Runnable() {
+              @Override
+              public void run() {
+                Preconditions.checkNotNull(peerGroup, "'peerGroup' must be present");
 
-          // Recalculate the bloom filter before every sync
-          log.debug("Recalculating bloom filter ...");
-          recalculateFastCatchupAndFilter();
+                // Recalculate the bloom filter before every sync
+                log.debug("Recalculating bloom filter ...");
+                recalculateFastCatchupAndFilter();
 
-          log.debug("Downloading block chain...");
+                log.debug("Downloading block chain...");
 
-          try {
-            log.debug("Starting blockchain download . . .");
-            // This method fires events along the way which are dealt with by MultiBitPeerEventListener
-            peerGroup.downloadBlockChain();
-            log.debug("After peerGroup.downloadBlockChain() called.");
-            if (WalletManager.INSTANCE.getCurrentWalletSummary().isPresent()) {
-              Wallet currentWallet = WalletManager.INSTANCE.getCurrentWalletSummary().get().getWallet();
-              if (currentWallet != null) {
-                // Do not reveal balance in logs
-                log.trace("Wallet has {} transactions", currentWallet.getTransactions(true).size());
-              } else {
-                log.debug("There is no current wallet");
+                try {
+                  log.debug("Starting blockchain download . . .");
+                  // This method fires events along the way which are dealt with by MultiBitPeerEventListener
+                  peerGroup.downloadBlockChain();
+                  log.debug("After peerGroup.downloadBlockChain() called.");
+                  if (WalletManager.INSTANCE.getCurrentWalletSummary().isPresent()) {
+                    Wallet currentWallet = WalletManager.INSTANCE.getCurrentWalletSummary().get().getWallet();
+                    if (currentWallet != null) {
+                      // Do not reveal balance in logs
+                      log.trace("Wallet has {} transactions", currentWallet.getTransactions(true).size());
+                    } else {
+                      log.debug("There is no current wallet");
+                    }
+                  } else {
+                    log.debug("There is no wallet in the current WalletSummary");
+                  }
+                  // As long as the block chain is not being downloaded (perhaps on a Peer with a longer chain)
+                  // then fire that we are finished
+                  if (peerEventListener != null && !peerEventListener.isDownloading()) {
+                    CoreEvents.fireBitcoinNetworkChangedEvent(BitcoinNetworkSummary.newChainDownloadCompleted());
+                    CoreEvents.fireBitcoinNetworkChangedEvent(BitcoinNetworkSummary.newNetworkPeerCount(peerGroup.numConnectedPeers()));
+                  }
+                } catch (RuntimeException re) {
+                  log.debug("Blockchain download was interrupted. Error was : '" + re.getMessage() + "'");
+                }
               }
-            } else {
-              log.debug("There is no wallet in the current WalletSummary");
-            }
-            // As long as the block chain is not being downloaded (perhaps on a Peer with a longer chain)
-            // then fire that we are finished
-            if (peerEventListener != null && !peerEventListener.isDownloading()) {
-              CoreEvents.fireBitcoinNetworkChangedEvent(BitcoinNetworkSummary.newChainDownloadCompleted());
-              CoreEvents.fireBitcoinNetworkChangedEvent(BitcoinNetworkSummary.newNetworkPeerCount(peerGroup.numConnectedPeers()));
-            }
-          } catch (RuntimeException re) {
-            log.debug("Blockchain download was interrupted. Error was : '" + re.getMessage() + "'");
-          }
-        }
-      });
+            });
 
   }
 
@@ -588,6 +588,15 @@ public class BitcoinNetworkService extends AbstractService {
 
     // Must be OK to be here
     log.debug("Forgetting last SendRequest and Wallet ");
+    /**for(Wallet.SendRequest sr : sendRequestSummary.getSendRequest().asSet()) {
+      try {
+        if(peerGroup.getConnectedPeers().size() > 0)
+          wallet.sendCoins(peerGroup.getConnectedPeers().get(0),sr);
+
+      } catch (InsufficientMoneyException e) {
+        e.printStackTrace();
+      }
+    }  **/
     lastSendRequestSummaryOptional = Optional.absent();
     lastWalletOptional = Optional.absent();
 
@@ -654,6 +663,8 @@ public class BitcoinNetworkService extends AbstractService {
     log.debug("Working out if client fee is required");
 
     boolean isClientFeeRequired;
+
+
     if (sendRequestSummary.getFeeState().isPresent()) {
       int currentNumberOfSends = sendRequestSummary.getFeeState().get().getCurrentNumberOfSends();
       int nextFeeSendCount = sendRequestSummary.getFeeState().get().getNextFeeSendCount();
@@ -762,7 +773,7 @@ public class BitcoinNetworkService extends AbstractService {
         // Require empty wallet to ensure that all funds are included
         sendRequest.emptyWallet = sendRequestSummary.isEmptyWallet();
       }
-      sendRequest.fee = Coin.ZERO;
+      sendRequest.fee = Transaction.REFERENCE_DEFAULT_MIN_TX_FEE;
       sendRequest.feePerKb = sendRequestSummary.getFeePerKB();
 
       // Only include the fee output if not emptying since it interferes
@@ -1369,60 +1380,60 @@ public class BitcoinNetworkService extends AbstractService {
       log.debug("Attaching progress callbacks to transactionBroadcast {} with tx {}", System.identityHashCode(transactionBroadcast), sendRequest.tx.getHashAsString());
 
       transactionBroadcast.setProgressCallback(
-        new TransactionBroadcast.ProgressCallback() {
-          @Override
-          public void onBroadcastProgress(double progress) {
-            log.debug("Tx {}, progress is now {}", sendRequest.tx, progress);
-            if (fireTransactionSeen) {
-              CoreEvents.fireBitcoinSendProgressEvent(new BitcoinSendProgressEvent(sendRequest.tx, progress));
-              CoreEvents.fireTransactionSeenEvent(new TransactionSeenEvent(sendRequest.tx, valueOptional.get()));
+              new TransactionBroadcast.ProgressCallback() {
+                @Override
+                public void onBroadcastProgress(double progress) {
+                  log.debug("Tx {}, progress is now {}", sendRequest.tx, progress);
+                  if (fireTransactionSeen) {
+                    CoreEvents.fireBitcoinSendProgressEvent(new BitcoinSendProgressEvent(sendRequest.tx, progress));
+                    CoreEvents.fireTransactionSeenEvent(new TransactionSeenEvent(sendRequest.tx, valueOptional.get()));
             }
-          }
-        });
+                }
+              });
 
       Futures.addCallback(
-        transactionFuture, new FutureCallback<Transaction>() {
-          @Override
-          public void onSuccess(Transaction transaction) {
-            log.info("Future says transaction '{}' has broadcast successfully", transaction.getHashAsString());
+              transactionFuture, new FutureCallback<Transaction>() {
+                @Override
+                public void onSuccess(Transaction transaction) {
+                  log.info("Future says transaction '{}' has broadcast successfully", transaction.getHashAsString());
 
-            // Declare the send a success
-            CoreEvents.fireBitcoinSentEvent(
-              new BitcoinSentEvent(
-                Optional.of(transaction),
-                sendRequestSummary.getDestinationAddress(),
-                sendRequestSummary.getTotalAmount(),
-                sendRequestSummary.getChangeAddress(),
-                Optional.of(sendRequest.fee),
-                sendRequestSummary.getClientFeeAdded(),
-                true,
-                CoreMessageKey.BITCOIN_SENT_OK,
-                null
+                  // Declare the send a success
+                  CoreEvents.fireBitcoinSentEvent(
+                          new BitcoinSentEvent(
+                                  Optional.of(transaction),
+                                  sendRequestSummary.getDestinationAddress(),
+                                  sendRequestSummary.getTotalAmount(),
+                                  sendRequestSummary.getChangeAddress(),
+                                  Optional.of(sendRequest.fee),
+                                  sendRequestSummary.getClientFeeAdded(),
+                                  true,
+                                  CoreMessageKey.BITCOIN_SENT_OK,
+                                  null
+                          ));
+
+                  CoreEvents.fireBitcoinSendProgressEvent(new BitcoinSendProgressEvent(sendRequest.tx, 1.0));
+                }
+
+                @Override
+                public void onFailure(Throwable throwable) {
+                  // This can't happen with the current code, but just in case one day that changes ...
+                  log.error("Future says transaction has NOT broadcast successfully. Error: '{}'", throwable);
+
+                  // Declare the send a failure
+                  // TODO Add i18n support for "No message" if required
+                  CoreEvents.fireBitcoinSentEvent(
+                          new BitcoinSentEvent(
+                                  Optional.<Transaction>absent(), sendRequestSummary.getDestinationAddress(), sendRequestSummary.getTotalAmount(),
+                                  sendRequestSummary.getChangeAddress(),
+                                  Optional.<Coin>absent(),
+                                  Optional.<Coin>absent(),
+                                  false,
+                                  CoreMessageKey.THE_ERROR_WAS,
+                                  new String[]{throwable == null ? "No message" : throwable.getMessage()}
               ));
 
-            CoreEvents.fireBitcoinSendProgressEvent(new BitcoinSendProgressEvent(sendRequest.tx, 1.0));
-          }
-
-          @Override
-          public void onFailure(Throwable throwable) {
-            // This can't happen with the current code, but just in case one day that changes ...
-            log.error("Future says transaction has NOT broadcast successfully. Error: '{}'", throwable);
-
-            // Declare the send a failure
-            // TODO Add i18n support for "No message" if required
-            CoreEvents.fireBitcoinSentEvent(
-              new BitcoinSentEvent(
-                Optional.<Transaction>absent(), sendRequestSummary.getDestinationAddress(), sendRequestSummary.getTotalAmount(),
-                sendRequestSummary.getChangeAddress(),
-                Optional.<Coin>absent(),
-                Optional.<Coin>absent(),
-                false,
-                CoreMessageKey.THE_ERROR_WAS,
-                new String[]{throwable == null ? "No message" : throwable.getMessage()}
-              ));
-
-          }
-        });
+                }
+              });
 
       log.debug("Initiated broadcast of transaction: '{}'", Utils.HEX.encode(sendRequest.tx.bitcoinSerialize()));
       transactionFuture.get();

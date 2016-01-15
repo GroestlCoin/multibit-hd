@@ -1408,7 +1408,7 @@ public enum WalletManager implements WalletEventListener {
    * currently owed to BRIT
    */
   public Optional<FeeState> calculateBRITFeeState(boolean includeOneExtraFee) {
-   /** if (feeService == null) {
+    if (feeService == null) {
       feeService = CoreServices.createFeeService();
     }
 
@@ -1421,14 +1421,14 @@ public enum WalletManager implements WalletEventListener {
 
       FeeState feeState = feeService.calculateFeeState(wallet, false);
       if (includeOneExtraFee) {
-        feeState.setFeeOwed(feeState.getFeeOwed().add(FeeService.FEE_PER_SEND));
+        feeState.setFeeOwed(feeState.getFeeOwed().add(Coin.ZERO));
       }
 
       return Optional.of(feeState);
     } else {
       return Optional.absent();
-    }                          **/
-    return Optional.absent();
+    }
+
   }
 
   /**

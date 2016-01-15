@@ -420,11 +420,11 @@
 
     <!-- XChange Poloniex support -->
     <!-- No working feed at 2.1.0 -->
-    <!--<dependency>-->
-      <!--<groupId>com.xeiam.xchange</groupId>-->
-      <!--<artifactId>xchange-poloniex</artifactId>-->
-      <!--<version>${xchange.version}</version>-->
-    <!--</dependency>-->
+    <dependency>
+      <groupId>com.xeiam.xchange</groupId>
+      <artifactId>xchange-poloniex</artifactId>
+      <version>2.1.0</version>
+    </dependency>
 
     <!-- XChange Vault of Satoshi exchange support -->
     <!-- Exchange out of business see #332 -->

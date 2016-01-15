@@ -180,29 +180,6 @@ public class FormatsTest {
     assertThat(balance[1]).isEqualTo("");
   }
 
-  @Test
-  public void testFormatCoinAsSymbolic_uXBT() throws Exception {
-
-    bitcoinConfiguration.setBitcoinSymbol(BitcoinSymbol.UXBT.name());
-
-    String[] balance = Formats.formatCoinAsSymbolic(Coin.parseCoin(testAmounts[0]), languageConfiguration, bitcoinConfiguration);
-
-    assertThat(balance.length).isEqualTo(2);
-    assertThat(balance[0]).isEqualTo("20,999,999,123,456.78");
-    assertThat(balance[1]).isEqualTo("");
-
-    balance = Formats.formatCoinAsSymbolic(Coin.parseCoin(testAmounts[1]), languageConfiguration, bitcoinConfiguration);
-
-    assertThat(balance.length).isEqualTo(2);
-    assertThat(balance[0]).isEqualTo("1,000,000.00");
-    assertThat(balance[1]).isEqualTo("");
-
-    balance = Formats.formatCoinAsSymbolic(Coin.parseCoin(testAmounts[2]), languageConfiguration, bitcoinConfiguration);
-
-    assertThat(balance.length).isEqualTo(2);
-    assertThat(balance[0]).isEqualTo("0.01");
-    assertThat(balance[1]).isEqualTo("");
-  }
 
   @Test
   public void testFormatCoinAsSymbolic_Satoshi() throws Exception {
@@ -297,28 +274,6 @@ public class FormatsTest {
     assertThat(Formats.formatAlertMessage(bitcoinURI).get()).isEqualTo("Payment \"Please donate to multibit.org\" (1AhN6rPdrMuKBGFDKR1k9A8SCLYaNgXhty) for \"\u00b5B 10,000.00\". Continue ?");
   }
 
-  @Test
-  public void testFormatAlertMessage_MultiBit_uXBT() throws Exception {
-
-    bitcoinConfiguration.setBitcoinSymbol(BitcoinSymbol.UXBT.name());
-
-    final BitcoinURI bitcoinURI = new BitcoinURI("bitcoin:1AhN6rPdrMuKBGFDKR1k9A8SCLYaNgXhty?amount=0.01&label=Please%20donate%20to%20multibit.org");
-
-    assertThat(Formats.formatAlertMessage(bitcoinURI).get()).isEqualTo("Payment \"Please donate to multibit.org\" (1AhN6rPdrMuKBGFDKR1k9A8SCLYaNgXhty) for \"\u00b5XBT 10,000.00\". Continue ?");
-  }
-
-  @Test
-  public void testFormatAlertMessage_MultiBit_uXBT_de_DE() throws Exception {
-
-    bitcoinConfiguration.setDecimalSeparator(",");
-    bitcoinConfiguration.setGroupingSeparator(".");
-    bitcoinConfiguration.setBitcoinSymbol(BitcoinSymbol.UXBT.name());
-
-    final BitcoinURI bitcoinURI = new BitcoinURI("bitcoin:1AhN6rPdrMuKBGFDKR1k9A8SCLYaNgXhty?amount=0.01&label=Please%20donate%20to%20multibit.org");
-
-    assertThat(Formats.formatAlertMessage(bitcoinURI).get()).isEqualTo("Payment \"Please donate to multibit.org\" (1AhN6rPdrMuKBGFDKR1k9A8SCLYaNgXhty) for \"\u00b5XBT 10.000" +
-        ",00\". Continue ?");
-  }
 
   @Test
   public void testFormatAlertMessage_MultiBit_mBTC_No_Label() throws Exception {
