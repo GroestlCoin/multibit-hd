@@ -35,7 +35,7 @@ public class InstallationManager {
   /**
    * The main MultiBit download site (HTTPS)
    */
-  public static final URI MBHD_WEBSITE_URI = URI.create("https://multibit.org");
+  public static final URI MBHD_WEBSITE_URI = URI.create("https://groestlcoin.org");
 
   /**
    * The main MultiBit help site (HTTPS to allow secure connection without redirect, with fall back to local help on failure)

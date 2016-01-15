@@ -53,10 +53,10 @@ public class ToolsScreenView extends AbstractScreenView<ToolsScreenModel> {
     contentPanel.add(Buttons.newShowVerifyNetworkButton(getShowVerifyNetworkAction()), MultiBitUI.LARGE_BUTTON_MIG + ",align center,push");
 
     // Hardware wallet tool is in top right for good visibility
-    contentPanel.add(Buttons.newShowUseHardwareWalletWizardButton(
-      getShowUseHardwareWalletWizardAction(),
-      getScreenModel().getWalletMode())
-      , MultiBitUI.LARGE_BUTTON_MIG + ",align center,push,wrap");
+    //contentPanel.add(Buttons.newShowUseHardwareWalletWizardButton(
+    //  getShowUseHardwareWalletWizardAction(),
+    //  getScreenModel().getWalletMode())
+    //  , MultiBitUI.LARGE_BUTTON_MIG + ",align center,push,wrap");
 
     // Row 2
     contentPanel.add(Buttons.newShowAboutButton(getShowAboutAction()), MultiBitUI.LARGE_BUTTON_MIG + ",align center,push, wrap");

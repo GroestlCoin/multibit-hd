@@ -451,7 +451,7 @@ public class RestoreWalletReportPanelView extends AbstractWizardPanelView<Welcom
     log.debug("Installing SSL certificates...");
 
     try {
-      // Attempt to install the CA certifications for the exchanges and MultiBit.org
+      // Attempt to install the CA certifications for the exchanges and Groestlcoin.org 
       // Configure SSL certificates without forcing
       HttpsManager.INSTANCE.installCACertificates(
         InstallationManager.getOrCreateApplicationDataDirectory(),

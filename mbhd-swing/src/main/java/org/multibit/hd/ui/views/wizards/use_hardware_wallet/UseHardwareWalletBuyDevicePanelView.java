@@ -33,8 +33,8 @@ import java.net.URI;
 
 public class UseHardwareWalletBuyDevicePanelView extends AbstractHardwareWalletWizardPanelView<UseHardwareWalletWizardModel, UseHardwareWalletState> implements ActionListener {
 
-  private static String BUY_TREZOR_URL = "https://buytrezor.com?a=multibit.org";
-  private static String BUY_KEEP_KEY_URL = "https://www.keepkey.com?r=multibit.org";
+  private static String BUY_TREZOR_URL = "https://buytrezor.com?a=groestlcoin.org";
+  private static String BUY_KEEP_KEY_URL = "https://www.keepkey.com?r=groestlcoin.org";
 
   /**
    * @param wizard    The wizard managing the states

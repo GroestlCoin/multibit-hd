@@ -219,7 +219,7 @@ public class AppearanceConfiguration {
   }
 
   /**
-   * @return The URI of the most latest article read from the MultiBit.org Atom feed
+   * @return The URI of the most latest article read from the Groestlcoin.org Atom feed
    */
   public String getLatestArticleUri() {
     return latestArticleUri;

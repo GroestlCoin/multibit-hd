@@ -108,12 +108,12 @@ public class FeeSettingsPanelView extends AbstractWizardPanelView<FeeSettingsWiz
     contentPanel.add(Labels.newBlankLabel(), "span 2, push, wrap"); // spacer
 
     contentPanel.add(Labels.newExplainClientFee1(FeeService.FEE_PER_SEND), "span 2, wrap");
-    contentPanel.add(Labels.newExplainClientFee2(), "span 2, wrap");
+    //contentPanel.add(Labels.newExplainClientFee2(), "span 2, wrap");
 
-    contentPanel.add(Labels.newBlankLabel(), "");
-    contentPanel.add(Buttons.newDonateNowButton(createDonateNowAction()), "wrap");
-    contentPanel.add(Labels.newBlankLabel(), "span 2, push, wrap"); // spacer
-    setChosenFee(Coin.valueOf(walletConfiguration.getFeePerKB()));
+    //contentPanel.add(Labels.newBlankLabel(), "");
+    //contentPanel.add(Buttons.newDonateNowButton(createDonateNowAction()), "wrap");
+    //contentPanel.add(Labels.newBlankLabel(), "span 2, push, wrap"); // spacer
+    //setChosenFee(Coin.valueOf(walletConfiguration.getFeePerKB()));
   }
 
   /**

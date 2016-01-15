@@ -25,7 +25,7 @@ public class EnvironmentSummary {
      */
     SYSTEM_TIME_DRIFT,
     /**
-     * A new article is present on the MultiBit.org Atom feed
+     * A new article is present on the Groestlcoin.org Atom feed
      */
     ATOM_FEED_CHECK,
     /**

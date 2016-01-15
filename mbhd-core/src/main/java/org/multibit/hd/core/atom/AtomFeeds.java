@@ -27,7 +27,7 @@ public class AtomFeeds {
   }
 
   /**
-   * <p>Perform an asynchronous parse of the MultiBit.org Atom XML feed using JAXB</p>
+   * <p>Perform an asynchronous parse of the Groestlcoin.org Atom XML feed using JAXB</p>
    *
    * @return A listenable future containing the result of the asynchronous read
    */

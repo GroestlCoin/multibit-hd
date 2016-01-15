@@ -291,7 +291,7 @@ public class CreateWalletReportPanelView extends AbstractWizardPanelView<Welcome
       // Give the user the impression of work being done
       Uninterruptibles.sleepUninterruptibly(250, TimeUnit.MILLISECONDS);
 
-      // Attempt to install the CA certifications for the exchanges and MultiBit.org
+      // Attempt to install the CA certifications for the exchanges and Groestlcoin.org 
       // Configure SSL certificates without forcing
       HttpsManager.INSTANCE.installCACertificates(
         InstallationManager.getOrCreateApplicationDataDirectory(),

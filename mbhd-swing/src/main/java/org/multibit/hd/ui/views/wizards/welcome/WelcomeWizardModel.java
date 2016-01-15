@@ -105,7 +105,7 @@ public class WelcomeWizardModel extends AbstractHardwareWalletWizardModel<Welcom
   private EnterSeedPhraseModel restoreWalletEnterTimestampModel;
 
   private ConfirmPasswordModel restoreWalletConfirmPasswordModel;
-  private String trezorWalletLabel = "multibit.org " + random.nextInt(1000);
+  private String trezorWalletLabel = "groestlcoin.org " + random.nextInt(1000);
 
   /**
    * The Trezor seed phrase size

@@ -1387,12 +1387,12 @@ public class MainController extends AbstractController implements
   }
 
   /**
-   * <p>Performs an Atom feed check against MultiBit.org over HTTPS
+   * <p>Performs an Atom feed check against Groestlcoin.org over HTTPS
    * If a new article is present an alert is shown</p>
    */
   private void handleAtomFeedCheck() {
 
-    // Parse the MultiBit.org Atom feed asynchronously
+    // Parse the Groestlcoin.org Atom feed asynchronously
     final ListenableFuture<AtomFeed> atomFeedFuture = AtomFeeds.parseMultiBitOrgFeed();
     Futures.addCallback(
       atomFeedFuture, new FutureCallback<AtomFeed>() {
@@ -1687,8 +1687,8 @@ public class MainController extends AbstractController implements
             log.debug("Check for system time drift...");
             handleSystemTimeDrift();
 
-            // Check for Atom feed from MultiBit.org
-            log.debug("Check for MultiBit.org Atom feed update...");
+            // Check for Atom feed from Groestlcoin.org 
+            log.debug("Check for Groestlcoin.org Atom feed update...");
             handleAtomFeedCheck();
 
           } catch (Exception e) {

@@ -236,7 +236,7 @@ public class HelpScreenView extends AbstractScreenView<HelpScreenModel> implemen
       String content = HttpsManager.getContentAsString(homeUrl);
       if (!content.contains("<li>")) {
         // Something is wrong at the server end so switch to internal mode
-        log.warn("Content from MultiBit.org does not contain <li> so switching to internal help");
+        log.warn("Content from Groestlcoin.org does not contain <li> so switching to internal help");
         useInternalHelp = true;
         refreshCerts = true;
       }
@@ -246,7 +246,7 @@ public class HelpScreenView extends AbstractScreenView<HelpScreenModel> implemen
       log.error("Unable to load help home page ", e);
       return null;
     } catch (IOException e) {
-      log.warn("Problem with MultiBit.org so switching to internal help", e);
+      log.warn("Problem with Groestlcoin.org so switching to internal help", e);
       useInternalHelp = true;
       refreshCerts = true;
     }
