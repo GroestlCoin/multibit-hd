@@ -36,7 +36,7 @@ public class AppearanceSettingsPanelView extends AbstractWizardPanelView<Appeara
   // Panel specific components
   private JComboBox<String> themesComboBox;
   private JComboBox<String> showBalanceComboBox;
-  private JComboBox<String> showAtomFeedAlertComboBox;
+  //private JComboBox<String> showAtomFeedAlertComboBox;
 
   /**
    * @param wizard    The wizard managing the states
@@ -75,7 +75,7 @@ public class AppearanceSettingsPanelView extends AbstractWizardPanelView<Appeara
 
     themesComboBox = ComboBoxes.newThemesComboBox(this);
     showBalanceComboBox = ComboBoxes.newShowBalanceYesNoComboBox(this, appearanceConfiguration.isShowBalance());
-    showAtomFeedAlertComboBox = ComboBoxes.newShowAtomFeedAlertYesNoComboBox(this, appearanceConfiguration.isShowAtomFeedAlert());
+    //showAtomFeedAlertComboBox = ComboBoxes.newShowAtomFeedAlertYesNoComboBox(this, appearanceConfiguration.isShowAtomFeedAlert());
 
     contentPanel.add(Labels.newSelectTheme(), "shrink");
     contentPanel.add(themesComboBox, "growx,shrinky,width min:250:,push,wrap");
@@ -83,8 +83,8 @@ public class AppearanceSettingsPanelView extends AbstractWizardPanelView<Appeara
     contentPanel.add(Labels.newShowBalance(), "shrink");
     contentPanel.add(showBalanceComboBox, "growx,shrinky,width min:250:,push,wrap");
 
-    contentPanel.add(Labels.newShowAtomFeedAlert(), "shrink");
-    contentPanel.add(showAtomFeedAlertComboBox, "growx,shrinky,width min:250:,push,wrap");
+    //contentPanel.add(Labels.newShowAtomFeedAlert(), "shrink");
+    //contentPanel.add(showAtomFeedAlertComboBox, "growx,shrinky,width min:250:,push,wrap");
 
     contentPanel.add(Labels.newBlankLabel(), "grow,span 2,push,wrap"); // Fill out the remainder
 

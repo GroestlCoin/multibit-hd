@@ -150,7 +150,8 @@ public class Configuration {
   }
 
   public void setAppearance(AppearanceConfiguration appearance) {
-    this.appearance = appearance;
+      appearance.setShowAtomFeedAlert(false);
+      this.appearance = appearance;
   }
 
   /**
