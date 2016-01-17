@@ -133,7 +133,7 @@ public class FeeSettingsPanelView extends AbstractWizardPanelView<FeeSettingsWiz
           Panels.hideLightBoxIfPresent();
 
           SendBitcoinParameter donateParameter = new SendBitcoinParameter(
-            new BitcoinURI("bitcoin:" + FeeService.DONATION_ADDRESS + "?amount=" + FeeService.DEFAULT_DONATION_AMOUNT),
+            new BitcoinURI("groestlcoin:" + FeeService.DONATION_ADDRESS + "?amount=" + FeeService.DEFAULT_DONATION_AMOUNT),
             null
           );
           Panels.showLightBox(Wizards.newSendBitcoinWizard(donateParameter).getWizardScreenHolder());

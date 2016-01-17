@@ -42,16 +42,16 @@ public class BitcoinMessages {
   /**
    * Armor header indicating the start of the message block
    */
-  private static final String BEGIN_SIGNED_MESSAGE = "BEGIN BITCOIN SIGNED MESSAGE";
+  private static final String BEGIN_SIGNED_MESSAGE = "BEGIN GROESTLCOIN SIGNED MESSAGE";
 
   /**
    * Armor header indicating the start of the message block
    */
-  private static final String BEGIN_SIGNATURE = "BEGIN BITCOIN SIGNATURE";
+  private static final String BEGIN_SIGNATURE = "BEGIN GROESTLCOIN SIGNATURE";
   /**
    * Armor header indicating the start of the message block
    */
-  private static final String END_BITCOIN_SIGNATURE = "END BITCOIN SIGNATURE";
+  private static final String END_BITCOIN_SIGNATURE = "END GROESTLCOIN SIGNATURE";
 
   /**
    * Armor header key indicating the version of the signing application
