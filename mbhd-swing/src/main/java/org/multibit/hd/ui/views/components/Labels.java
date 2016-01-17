@@ -1019,7 +1019,7 @@ public class Labels {
   public static JLabel newPeerCountInfo() {
 
     // Provide the number of peers required to be "healthy"
-    return newLabel(MessageKey.VERIFY_NETWORK_PEER_COUNT, 10);
+    return newLabel(MessageKey.VERIFY_NETWORK_PEER_COUNT, 4);
   }
 
   /**
