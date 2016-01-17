@@ -84,9 +84,9 @@ public class LanguageSettingsPanelView extends AbstractWizardPanelView<LanguageS
     contentPanel.add(Labels.newSelectLanguageLabel(), "shrink,aligny top");
     contentPanel.add(languagesComboBox, "growx," + MultiBitUI.COMBO_BOX_WIDTH_MIG + ",push,aligny top,wrap");
 
-    contentPanel.add(Labels.newLocalisationByVolunteersNote(), "span 2,wrap");
-    contentPanel.add(Labels.newBlankLabel());
-    contentPanel.add(Buttons.newLaunchBrowserButton(getLaunchBrowserAction(), MessageKey.I_WOULD_LIKE_TO_HELP, MessageKey.I_WOULD_LIKE_TO_HELP), "wrap");
+    //contentPanel.add(Labels.newLocalisationByVolunteersNote(), "span 2,wrap");
+    //contentPanel.add(Labels.newBlankLabel());
+    //contentPanel.add(Buttons.newLaunchBrowserButton(getLaunchBrowserAction(), MessageKey.I_WOULD_LIKE_TO_HELP, MessageKey.I_WOULD_LIKE_TO_HELP), "wrap");
 
     contentPanel.add(Labels.newBlankLabel(), "span 2, push, wrap"); // spacer
   }
