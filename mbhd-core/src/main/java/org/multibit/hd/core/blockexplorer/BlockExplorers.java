@@ -20,13 +20,7 @@ public class BlockExplorers {
 
   static {
     // Add all block explorers in alphabetic order
-    allBlockExplorers.add(new BitEasyComBlockExplorer());
-    allBlockExplorers.add(new BitPayComBlockExplorer());
-    allBlockExplorers.add(new BlockChainInfoBlockExplorer());
-    allBlockExplorers.add(new BlockonomicsBlockExplorer());
-    allBlockExplorers.add(new BlockrIoBlockExplorer());
-    allBlockExplorers.add(new BlockTrailComBlockExplorer());
-    allBlockExplorers.add(new SmartBitComAuBlockExplorer());
+    allBlockExplorers.add(new ChainzCryptoidBlockExplorer());
   }
 
   /**
@@ -59,6 +53,6 @@ public class BlockExplorers {
    * Get the default block explorer
    */
   public static BlockExplorer getDefaultBlockExplorer() {
-    return new BlockChainInfoBlockExplorer();
+    return new ChainzCryptoidBlockExplorer();
   }
 }

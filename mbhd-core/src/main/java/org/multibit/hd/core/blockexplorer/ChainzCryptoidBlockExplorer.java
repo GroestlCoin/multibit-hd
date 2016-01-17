@@ -7,7 +7,7 @@ import java.text.MessageFormat;
  *  </p>
  *  
  */
-public class BlockChainInfoBlockExplorer implements BlockExplorer {
+public class ChainzCryptoidBlockExplorer implements BlockExplorer {
   public static final String ID = "blockchain";
 
   @Override

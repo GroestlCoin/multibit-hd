@@ -28,7 +28,7 @@ public class BlockExplorersTest {
   @Test
   public void testDefaultBlockExplorer() {
     BlockExplorer defaultBlockExplorer = BlockExplorers.getDefaultBlockExplorer();
-    assertThat(defaultBlockExplorer instanceof BlockChainInfoBlockExplorer).isTrue();
+    assertThat(defaultBlockExplorer instanceof ChainzCryptoidBlockExplorer).isTrue();
   }
 
   @Test
@@ -39,7 +39,7 @@ public class BlockExplorersTest {
 
     assertThat(iterator.next() instanceof BitEasyComBlockExplorer).isTrue();
     assertThat(iterator.next() instanceof BitPayComBlockExplorer).isTrue();
-    assertThat(iterator.next() instanceof BlockChainInfoBlockExplorer).isTrue();
+    assertThat(iterator.next() instanceof ChainzCryptoidBlockExplorer).isTrue();
     assertThat(iterator.next() instanceof BlockonomicsBlockExplorer).isTrue();
     assertThat(iterator.next() instanceof BlockrIoBlockExplorer).isTrue();
     assertThat(iterator.next() instanceof BlockTrailComBlockExplorer).isTrue();
@@ -84,13 +84,13 @@ public class BlockExplorersTest {
   @Test
   public void testBlockChainInfo() {
     final String expectedId = "blockchain";
-    assertThat(expectedId.equals(BlockChainInfoBlockExplorer.ID));
+    assertThat(expectedId.equals(ChainzCryptoidBlockExplorer.ID));
 
-    Optional<BlockExplorer> blockExplorerOptional = BlockExplorers.getBlockExplorerById(BlockChainInfoBlockExplorer.ID);
+    Optional<BlockExplorer> blockExplorerOptional = BlockExplorers.getBlockExplorerById(ChainzCryptoidBlockExplorer.ID);
     assertThat(blockExplorerOptional.isPresent()).isTrue();
     BlockExplorer blockExplorer = blockExplorerOptional.get();
 
-    assertThat(blockExplorer instanceof BlockChainInfoBlockExplorer).isTrue();
+    assertThat(blockExplorer instanceof ChainzCryptoidBlockExplorer).isTrue();
     assertThat(blockExplorer.getName().equals("blockchain.info")).isTrue();
 
     MessageFormat format = blockExplorer.getTransactionLookupMessageFormat();

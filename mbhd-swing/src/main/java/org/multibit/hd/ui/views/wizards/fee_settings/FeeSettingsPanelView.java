@@ -107,7 +107,7 @@ public class FeeSettingsPanelView extends AbstractWizardPanelView<FeeSettingsWiz
     contentPanel.add(transactionFeeAmountViewPanel, "growx,shrinky,push,wrap");
     contentPanel.add(Labels.newBlankLabel(), "span 2, push, wrap"); // spacer
 
-    contentPanel.add(Labels.newExplainClientFee1(FeeService.FEE_PER_SEND), "span 2, wrap");
+    //contentPanel.add(Labels.newExplainClientFee1(FeeService.FEE_PER_SEND), "span 2, wrap");
     //contentPanel.add(Labels.newExplainClientFee2(), "span 2, wrap");
 
     //contentPanel.add(Labels.newBlankLabel(), "");

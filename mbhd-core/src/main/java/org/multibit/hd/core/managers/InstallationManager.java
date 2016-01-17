@@ -35,12 +35,12 @@ public class InstallationManager {
   /**
    * The main MultiBit download site (HTTPS)
    */
-  public static final URI MBHD_WEBSITE_URI = URI.create("https://groestlcoin.org");
+  public static final URI MBHD_WEBSITE_URI = URI.create("http://groestlcoin.org");
 
   /**
    * The main MultiBit help site (HTTPS to allow secure connection without redirect, with fall back to local help on failure)
    */
-  public static final String MBHD_WEBSITE_HELP_DOMAIN = "https://groestlcoin.org";
+  public static final String MBHD_WEBSITE_HELP_DOMAIN = "http://groestlcoin.org";
   public static final String MBHD_WEBSITE_HELP_BASE = MBHD_WEBSITE_HELP_DOMAIN + "/";
 
   public static final String MBHD_APP_NAME = "MultiGroestlHD";

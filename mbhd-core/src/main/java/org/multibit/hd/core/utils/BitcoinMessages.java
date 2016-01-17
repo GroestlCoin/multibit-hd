@@ -89,7 +89,7 @@ public class BitcoinMessages {
 
     // Provide PGP-like signature wrapping
     String versionField = VERSION + ": MultiGroestl HD (" + Configurations.currentConfiguration.getCurrentVersion() + ")";
-    String commentField = COMMENT + ": https://groestlcoin.org";
+    String commentField = COMMENT + ": http://groestlcoin.org";
     String addressField = ADDRESS + ": " + signingAddress.toString();
 
     // Format the string to approximate RFC 2440

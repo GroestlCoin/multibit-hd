@@ -42,9 +42,9 @@ public class FeeService {
 
   private static final Logger log = LoggerFactory.getLogger(FeeService.class);
 
-  public static final Coin MINIMUM_FEE_PER_KB = Coin.valueOf(000);   // The minimum relay fee (5000 sat per KB)  as per https://www.reddit.com/r/Bitcoin/comments/3oecqm/psa_to_address_mempool_flooding_bitcoin_core/
-  public static final Coin DEFAULT_FEE_PER_KB = Coin.valueOf(0000);  // 0.1 mBTC per KB - a long used fee structure which works as of spam attacks of July 2015
-  public static final Coin MAXIMUM_FEE_PER_KB = Coin.valueOf(0000);  // 0.5 mBTC per KB
+  public static final Coin MINIMUM_FEE_PER_KB = Coin.valueOf(5000);   // The minimum relay fee (5000 sat per KB)  as per https://www.reddit.com/r/Bitcoin/comments/3oecqm/psa_to_address_mempool_flooding_bitcoin_core/
+  public static final Coin DEFAULT_FEE_PER_KB = Coin.valueOf(20000);  // 0.1 mBTC per KB - a long used fee structure which works as of spam attacks of July 2015
+  public static final Coin MAXIMUM_FEE_PER_KB = Coin.valueOf(1,0);  // 0.5 mBTC per KB
 
   public static final String DONATION_ADDRESS = "1AhN6rPdrMuKBGFDKR1k9A8SCLYaNgXhty";
   public static final String DEFAULT_DONATION_AMOUNT = "0.0"; // in BTC as per BIP21

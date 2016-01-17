@@ -3,7 +3,7 @@ package org.multibit.hd.core.config;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.google.common.collect.Maps;
-import org.multibit.hd.core.blockexplorer.BlockChainInfoBlockExplorer;
+import org.multibit.hd.core.blockexplorer.ChainzCryptoidBlockExplorer;
 
 import java.util.Map;
 
@@ -56,7 +56,7 @@ public class AppearanceConfiguration {
   /**
    * The id of the block explorer used to drill down into transactions
    */
-  private String blockExplorerId = BlockChainInfoBlockExplorer.ID;
+  private String blockExplorerId = ChainzCryptoidBlockExplorer.ID;
 
   /**
    * True if Atom feed alerts should be shown (subject to most recent article URI)
