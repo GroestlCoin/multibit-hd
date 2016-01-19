@@ -668,8 +668,12 @@ public class WalletService extends AbstractService {
 
     // Work it out from the current settings
     amountFiat.setExchangeName(Optional.of(ExchangeKey.current().getExchangeName()));
-
-    if (CoreServices.getApplicationEventService() != null) {
+    amountFiat.setRate(Optional.of(String.valueOf(ExchangeTickerService.btcGrsRate)));
+    if(ExchangeTickerService.selectedCurrency.getValue() != 0.0) {
+      amountFiat.setAmount(Optional.of((new BigDecimal(ExchangeTickerService.btcGrsRate * ExchangeTickerService.btcUsdRate * ExchangeTickerService.selectedCurrency.getValue() * (amountBTC.getValue()/100000000.0)))));
+      amountFiat.setCurrency(Optional.of(Currency.getInstance(ExchangeTickerService.selectedCurrency.getKey())));
+    }
+    /**if (CoreServices.getApplicationEventService() != null) {
       Optional<ExchangeRateChangedEvent> exchangeRateChangedEvent = CoreServices.getApplicationEventService().getLatestExchangeRateChangedEvent();
       if (exchangeRateChangedEvent.isPresent() && exchangeRateChangedEvent.get().getRate() != null) {
         amountFiat.setRate(Optional.of(exchangeRateChangedEvent.get().getRate().toString()));
@@ -691,7 +695,7 @@ public class WalletService extends AbstractService {
         amountFiat.setCurrency(Optional.<Currency>absent());
       }
     }
-
+       **/
     log.trace("Calculated amount was {}", amountFiat);
     return amountFiat;
   }
@@ -700,9 +704,9 @@ public class WalletService extends AbstractService {
     // Get the transactionInfo that contains the fiat exchange info, if it is available from the payment database
     // This will use the fiat rate at time of send/ receive
     TransactionInfo transactionInfo = transactionInfoMap.get(transactionHashAsString);
-    if (transactionInfo != null) {
-      return transactionInfo.getAmountFiat();
-    }
+    //if (transactionInfo != null) {
+    //  return transactionInfo.getAmountFiat();
+    //}
 
     FiatPayment amountFiat = calculateFiatPaymentEquivalent(amountBTC);
 
@@ -712,10 +716,10 @@ public class WalletService extends AbstractService {
     newTransactionInfo.setAmountFiat(amountFiat);
 
     // Double check we are not overwriting an extant transactionInfo
-    if (transactionInfoMap.get(transactionHashAsString) == null) {
+    //if (transactionInfoMap.get(transactionHashAsString) == null) {
       // Expected
-      transactionInfoMap.putIfAbsent(transactionHashAsString, newTransactionInfo);
-    }
+      transactionInfoMap.put(transactionHashAsString, newTransactionInfo);
+    //}
 
     return amountFiat;
   }

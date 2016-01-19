@@ -1,6 +1,7 @@
 package org.multibit.hd.ui.views.screens.payments;
 
 import com.google.common.eventbus.Subscribe;
+import javafx.util.Pair;
 import net.miginfocom.swing.MigLayout;
 import org.multibit.commons.concurrent.SafeExecutors;
 import org.multibit.hd.core.dto.*;
@@ -10,6 +11,7 @@ import org.multibit.hd.core.managers.InstallationManager;
 import org.multibit.hd.core.managers.WalletManager;
 import org.multibit.hd.core.services.ContactService;
 import org.multibit.hd.core.services.CoreServices;
+import org.multibit.hd.core.services.ExchangeTickerService;
 import org.multibit.hd.core.services.WalletService;
 import org.multibit.hd.ui.events.view.ComponentChangedEvent;
 import org.multibit.hd.ui.events.view.ViewEvents;
@@ -32,6 +34,7 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -47,7 +50,7 @@ import java.util.concurrent.ExecutorService;
  *
  * @since 0.0.1
  */
-public class PaymentsScreenView extends AbstractScreenView<PaymentsScreenModel> {
+public class PaymentsScreenView extends AbstractScreenView<PaymentsScreenModel> implements ActionListener {
 
   private static final Logger log = LoggerFactory.getLogger(PaymentsScreenView.class);
 
@@ -58,6 +61,8 @@ public class PaymentsScreenView extends AbstractScreenView<PaymentsScreenModel> 
   private JButton deleteRequestButton;
 
   private JButton undoButton;
+
+  private JComboBox<String> currencyBox;
 
   /**
    * Handles update operations
@@ -102,6 +107,8 @@ public class PaymentsScreenView extends AbstractScreenView<PaymentsScreenModel> 
     undoButton = Buttons.newUndoButton(getUndoAction());
     undoButton.setEnabled(false);
 
+    currencyBox = ComboBoxes.newComboBox(new String[]{""});
+    currencyBox.addActionListener(this);
     JButton exportButton = Buttons.newExportButton(getExportAction());
 
     WalletService walletService = CoreServices.getCurrentWalletService().get();
@@ -129,11 +136,31 @@ public class PaymentsScreenView extends AbstractScreenView<PaymentsScreenModel> 
     contentPanel.add(exportButton, "shrink");
     contentPanel.add(deleteRequestButton, "shrink");
     contentPanel.add(undoButton, "shrink");
+    contentPanel.add(currencyBox, "shrink");
     contentPanel.add(Labels.newBlankLabel(), "growx,push,wrap"); // Empty label to pack buttons
 
     contentPanel.add(scrollPane, "span 6, grow, push");
 
     return contentPanel;
+  }
+
+  @Override
+  public void afterShow(){
+    if(currencyBox.getItemCount() < 2 && ExchangeTickerService.currencyRates != null && ExchangeTickerService.currencyRates.size() > 0) {
+      String[] currencyList = new String[ExchangeTickerService.currencyRates.size()];
+      currencyBox.removeAllItems();
+      int i = 0;
+      for(Pair<String, Double> p : ExchangeTickerService.currencyRates) {
+        currencyBox.addItem(p.getKey());
+      }
+      if(ExchangeTickerService.selectedCurrency.getValue() == 0.0)
+        ExchangeTickerService.selectedCurrency = ExchangeTickerService.currencyRates.get(currencyBox.getSelectedIndex());
+      update(true);
+    }
+    else
+      currencyBox.setSelectedIndex(ExchangeTickerService.currencyRates.indexOf(ExchangeTickerService.selectedCurrency));
+
+
   }
 
   /**
@@ -384,6 +411,17 @@ public class PaymentsScreenView extends AbstractScreenView<PaymentsScreenModel> 
 
       ViewEvents.fireWalletDetailChangedEvent(walletDetail);
     }
+  }
+
+  @Override
+  public void actionPerformed(ActionEvent e) {
+    if(e.getActionCommand().equals("comboBoxChanged")) {
+      if(ExchangeTickerService.selectedCurrency.getValue() != 0.0 && ExchangeTickerService.currencyRates.size() > 0) {
+        ExchangeTickerService.selectedCurrency = ExchangeTickerService.currencyRates.get(currencyBox.getSelectedIndex());
+        update(true);
+      }
+    }
+
   }
 
   class TableRowModelListener implements ListSelectionListener {

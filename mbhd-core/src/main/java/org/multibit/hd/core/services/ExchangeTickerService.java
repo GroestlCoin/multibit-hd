@@ -6,12 +6,16 @@ import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.stream.JsonReader;
 import com.xeiam.xchange.Exchange;
 import com.xeiam.xchange.ExchangeFactory;
 import com.xeiam.xchange.NotAvailableFromExchangeException;
 import com.xeiam.xchange.currency.CurrencyPair;
 
 import com.xeiam.xchange.dto.marketdata.Ticker;
+import javafx.util.Pair;
 import org.multibit.commons.concurrent.SafeExecutors;
 import org.multibit.commons.utils.Dates;
 import org.multibit.hd.core.config.BitcoinConfiguration;
@@ -28,9 +32,11 @@ import si.mazi.rescu.HttpStatusIOException;
 
 import javax.net.ssl.SSLHandshakeException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.net.UnknownHostException;
+import java.net.*;
 import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
@@ -53,7 +59,11 @@ public class ExchangeTickerService extends AbstractService {
    * 15 minutes = 900 seconds and is the recommended value
    */
   public static final int TICKER_REFRESH_SECONDS = 900;
-
+  public static double btcGrsRate = 0;
+  public static double btcUsdRate = 0;
+  public static final ArrayList<Pair<String,Double>> currencyRates = new ArrayList<Pair<String, Double>>();
+  public static final String currencyRatesUrl = "http://btc.blockr.io/api/v1/exchangerate/current";
+  public static Pair<String, Double> selectedCurrency = new Pair<String, Double>("", 0.0);
   private final ExchangeKey exchangeKey;
   private final Currency localCurrency;
 
@@ -74,8 +84,9 @@ public class ExchangeTickerService extends AbstractService {
 
     super();
 
-    this.exchangeKey = ExchangeKey.valueOf(bitcoinConfiguration.getCurrentExchange());
+    //this.exchangeKey = ExchangeKey.valueOf(bitcoinConfiguration.getCurrentExchange());
     this.localCurrency = Currency.getInstance(bitcoinConfiguration.getLocalCurrencyCode());
+    this.exchangeKey = ExchangeKey.POLONIEX;
 
     // Check for a real exchange
     if (ExchangeKey.NONE.equals(exchangeKey)) {
@@ -129,6 +140,38 @@ public class ExchangeTickerService extends AbstractService {
                   return;
                 }
 
+                URL url = null;
+                try {
+                  url = new URL(currencyRatesUrl);
+                  URLConnection conn = url.openConnection();
+                  InputStream is = conn.getInputStream();
+                  InputStreamReader isr = new InputStreamReader(is);
+                  com.google.gson.JsonParser parser = new com.google.gson.JsonParser();
+                  com.google.gson.stream.JsonReader reader = new JsonReader(isr);
+                  JsonElement element = parser.parse(reader);
+                  JsonObject jsonObject = element.getAsJsonObject();
+                  JsonObject currencyArray = jsonObject.get("data").getAsJsonArray().get(0).getAsJsonObject().get("rates").getAsJsonObject();
+                  currencyRates.clear();
+                  for(Map.Entry<String, JsonElement> e : currencyArray.entrySet()) {
+                    if(e.getKey().equals("BTC")) {
+                      btcUsdRate = 1/e.getValue().getAsDouble();
+                    }
+                    else
+                      currencyRates.add(new Pair<String, Double>(e.getKey(),e.getValue().getAsDouble()));
+                  }
+                  Collections.sort(currencyRates, new Comparator<Pair<String,Double>>() {
+                    @Override
+                    public int compare(Pair<String, Double> o1, Pair<String, Double> o2) {
+                      return o1.getKey().compareTo(o2.getKey());
+                    }
+                  });
+
+                } catch (MalformedURLException e) {
+                  e.printStackTrace();
+                } catch (IOException e) {
+                  e.printStackTrace();
+                }
+
                 // Fire the event in case the exchange is restored (or a new exchange comes online from a settings change)
                 CoreEvents.fireExchangeStatusChangedEvent(ExchangeSummary.newExchangeOK(exchangeKey.getExchangeName()));
 
@@ -140,7 +183,7 @@ public class ExchangeTickerService extends AbstractService {
 
                   CoreEvents.fireExchangeRateChangedEvent(
                     rate,
-                    localCurrency,
+                    Currency.getInstance("USD"),
                     Optional.of(exchangeName),
                     // Exchange rate will expire just after the next update (with small overlap)
                     Dates.nowUtc().plusSeconds(TICKER_REFRESH_SECONDS + 5)
@@ -149,6 +192,7 @@ public class ExchangeTickerService extends AbstractService {
                   log.debug("Updated '{}' ticker: '{}'", exchangeName, ticker.getLast());
 
                   previous = ticker.getLast();
+                  btcGrsRate = ticker.getLast().doubleValue();
                 }
               }
 
@@ -236,7 +280,7 @@ public class ExchangeTickerService extends AbstractService {
    */
   public ListenableFuture<Ticker> latestTicker() {
     // Apply any exchange quirks to the counter code (e.g. ISO "RUB" -> legacy "RUR")
-    final String exchangeCounterCode = ExchangeKey.exchangeCode(localCurrency.getCurrencyCode(), exchangeKey);
+    final String exchangeCounterCode = "BTC";//ExchangeKey.exchangeCode(localCurrency.getCurrencyCode(), exchangeKey);
     final String exchangeBaseCode = ExchangeKey.exchangeCode("GRS", exchangeKey);
 
     // Perform an asynchronous call to the exchange
@@ -250,6 +294,8 @@ public class ExchangeTickerService extends AbstractService {
 
             return getEmptyTicker();
           }
+
+
 
           //if (ExchangeKey.OPEN_EXCHANGE_RATES.equals(exchangeKey)) {
 
