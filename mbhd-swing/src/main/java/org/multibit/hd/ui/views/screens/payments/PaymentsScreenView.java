@@ -159,8 +159,6 @@ public class PaymentsScreenView extends AbstractScreenView<PaymentsScreenModel> 
     }
     else
       currencyBox.setSelectedIndex(ExchangeTickerService.currencyRates.indexOf(ExchangeTickerService.selectedCurrency));
-
-
   }
 
   /**

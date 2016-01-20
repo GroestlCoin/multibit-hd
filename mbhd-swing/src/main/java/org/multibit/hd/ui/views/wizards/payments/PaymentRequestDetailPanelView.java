@@ -146,14 +146,14 @@ public class PaymentRequestDetailPanelView extends AbstractWizardPanelView<Payme
       contentPanel.add(noteLabel);
       contentPanel.add(noteValue, "wrap");
 
-      contentPanel.add(amountBTCLabel);
-      contentPanel.add(amountBTCValue, "wrap");
+      //contentPanel.add(amountBTCLabel);
+      //contentPanel.add(amountBTCValue, "wrap");
 
-      contentPanel.add(amountFiatLabel);
-      contentPanel.add(amountFiatValue, "wrap");
+      //contentPanel.add(amountFiatLabel);
+      //contentPanel.add(amountFiatValue, "wrap");
 
-      contentPanel.add(exchangeRateLabel);
-      contentPanel.add(exchangeRateValue, "wrap");
+      //contentPanel.add(exchangeRateLabel);
+      //contentPanel.add(exchangeRateValue, "wrap");
 
       // Register components
       registerComponents(displayBitcoinAddressMaV, displayQRCodePopoverMaV);

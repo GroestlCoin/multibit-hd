@@ -126,7 +126,7 @@ public class TransactionAmountPanelView extends AbstractWizardPanelView<Payments
     contentPanel.add(amountFiatLabel);
     contentPanel.add(amountFiatValue, "wrap");
 
-    contentPanel.add(exchangeRateLabel);
+    /**contentPanel.add(exchangeRateLabel);
     contentPanel.add(exchangeRateValue, "wrap");
 
     contentPanel.add(miningFeePaidLabel);
@@ -137,6 +137,7 @@ public class TransactionAmountPanelView extends AbstractWizardPanelView<Payments
 
     contentPanel.add(clientFeePaidLabel);
     contentPanel.add(clientFeePaidValue, "wrap");
+     **/
   }
 
   @Override
