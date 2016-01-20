@@ -289,8 +289,8 @@ public class Formats {
     format.setDecimalFormatSymbols(dfs);
 
     format.setMinimumIntegerDigits(1);
-    format.setMaximumFractionDigits(bitcoinConfiguration.getLocalDecimalPlaces());
-    format.setMinimumFractionDigits(bitcoinConfiguration.getLocalDecimalPlaces());
+    format.setMaximumFractionDigits(4);
+    format.setMinimumFractionDigits(4);
 
     format.setDecimalSeparatorAlwaysShown(true);
 

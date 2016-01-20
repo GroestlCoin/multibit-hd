@@ -1,6 +1,7 @@
 package org.multibit.hd.ui.views.components.display_amount;
 
 import com.google.common.base.Strings;
+import javafx.util.Pair;
 import org.bitcoinj.core.Coin;
 import com.google.common.base.Preconditions;
 import net.miginfocom.swing.MigLayout;
@@ -8,6 +9,7 @@ import org.multibit.hd.core.config.BitcoinConfiguration;
 import org.multibit.hd.core.config.Configuration;
 import org.multibit.hd.core.config.LanguageConfiguration;
 import org.multibit.hd.core.exchanges.ExchangeKey;
+import org.multibit.hd.core.services.ExchangeTickerService;
 import org.multibit.hd.ui.languages.Formats;
 import org.multibit.hd.ui.languages.Languages;
 import org.multibit.hd.ui.languages.MessageKey;
@@ -20,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
+import java.math.BigDecimal;
 import java.util.Locale;
 
 /**
@@ -126,10 +129,10 @@ public class DisplayAmountView extends AbstractComponentView<DisplayAmountModel>
     ExchangeKey exchangeKey = ExchangeKey.valueOf(bitcoinConfiguration.getCurrentExchange());
 
     // The exchange rate provider can override the intention of the local amount visibility
-    if (ExchangeKey.NONE.equals(exchangeKey)) {
-      getModel().get().setLocalAmountVisible(false);
-      exchangeLabel.setVisible(false);
-    }
+    //if (ExchangeKey.NONE.equals(exchangeKey)) {
+    //  getModel().get().setLocalAmountVisible(false);
+    //  exchangeLabel.setVisible(false);
+    //}
 
     Coin coin = getModel().get().getCoinAmount();
 
@@ -160,11 +163,16 @@ public class DisplayAmountView extends AbstractComponentView<DisplayAmountModel>
     if (getModel().get().isLocalAmountVisible()) {
 
       // Leave this in to prevent regression of exchange rate misconfiguration conditions
-      Preconditions.checkState(!ExchangeKey.NONE.equals(exchangeKey),"Exchange NONE should not permit a local amount to be visible.");
-
+      //Preconditions.checkState(!ExchangeKey.NONE.equals(exchangeKey),"Exchange NONE should not permit a local amount to be visible.");
+      BigDecimal fiatAmount = new BigDecimal(0);
       // Provide basic representation for locale
+      for(Pair<String, Double> currency : ExchangeTickerService.currencyRates) {
+          if(currency.getKey().equals(bitcoinConfiguration.getLocalCurrencyCode())) {
+              fiatAmount = new BigDecimal((1/currency.getValue())*ExchangeTickerService.btcUsdRate*(coin.getValue()/100000000)*ExchangeTickerService.btcGrsRate);
+          }
+      }
       String localDisplay = Formats.formatLocalAmount(
-        getModel().get().getLocalAmount(),
+        fiatAmount,
         locale,
         bitcoinConfiguration, getModel().get().isShowNegative()
       );
