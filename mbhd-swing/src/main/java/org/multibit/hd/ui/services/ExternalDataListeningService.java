@@ -52,10 +52,10 @@ public class ExternalDataListeningService extends AbstractService {
   /**
    * MultiBit HD port number as specified in <a href="http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers">the list of TCP and UDP port numbers</a>.
    */
-  public static final int MULTIBIT_HD_NETWORK_SOCKET = 8330;
+  public static final int MULTIBIT_HD_NETWORK_SOCKET = 63330;
 
   /**
-   * Message start token (to ensure this isn't an accidental bunch of characters being sent)
+   * Message start token (to ensure this isn't an accidental bunch of charact ers being sent)
    */
   public static final String MESSAGE_START = "$$MBHD-Start$$";
 
