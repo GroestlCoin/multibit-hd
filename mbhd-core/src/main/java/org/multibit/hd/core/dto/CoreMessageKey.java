@@ -28,10 +28,10 @@ public enum CoreMessageKey {
   TRANSACTION_CREATED_OK("core_transaction_created_ok"),
   TRANSACTION_CREATION_FAILED("core_transaction_creation_failed"),
 
-  SENDING_BITCOIN("core_sending_bitcoin"),
+  SENDING_BITCOIN("core_sending_groestlcoin"),
 
-  BITCOIN_SENT_OK("core_bitcoin_sent_ok"),
-  BITCOIN_SEND_FAILED("core_bitcoin_send_failed"),
+  BITCOIN_SENT_OK("core_groestlcoin_sent_ok"),
+  BITCOIN_SEND_FAILED("core_groestlcoin_send_failed"),
 
   // Environment
   DEBUGGER_ATTACHED("core_debugger_attached"),
@@ -48,9 +48,9 @@ public enum CoreMessageKey {
 
   // Connection / Sync
   THE_ERROR_WAS("core_the_error_was"),
-  COULD_NOT_CONNECT_TO_BITCOIN_NETWORK("core_could_not_connect_to_bitcoin_network"),
-  CONNECTING_TO_BITCOIN_NETWORK("core_connecting_to_bitcoin_network"),
-  CONNECTED_TO_BITCOIN_NETWORK("core_connected_to_bitcoin_network"),
+  COULD_NOT_CONNECT_TO_BITCOIN_NETWORK("core_could_not_connect_to_groestlcoin_network"),
+  CONNECTING_TO_BITCOIN_NETWORK("core_connecting_to_groestlcoin_network"),
+  CONNECTED_TO_BITCOIN_NETWORK("core_connected_to_groestlcoin_network"),
   NO_ACTIVE_WALLET("core_no_active_wallet"),
   PREPARING_TO_SYNCHRONISE("core_preparing_to_synchronise"),
   SYNCHRONISING("core_synchronising"),
