@@ -1,9 +1,9 @@
------BEGIN BITCOIN SIGNED MESSAGE-----
+-----BEGIN GROESTLCOIN SIGNED MESSAGE-----
 Hello World
 -----BEGIN BITCOIN SIGNATURE-----
-Version: MultiBit HD (0.2.0)
-Comment: https://multibit.org
-Address: 16R2kAxaUNM4xj6ykKbxEugpJdYyJzTP13
+Version: MultiGroestl HD (0.1.5)
+Comment: https://multigroestl.org
+Address: FZ4AfMJjHNzjtMHvFR244TZf2934Y6J5Fr
 
 H0b22gIQIfutUzm7Z9qchdfhUtaO52alhNPK3emrkGOfbOzGHVPuWD9rMIphxniwBNgF/YN4c5C/dMwXz3yJz5k=
------END BITCOIN SIGNATURE-----
+-----END GROESTLCOIN SIGNATURE-----
