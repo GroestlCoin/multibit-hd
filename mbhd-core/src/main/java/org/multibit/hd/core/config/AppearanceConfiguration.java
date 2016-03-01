@@ -61,7 +61,7 @@ public class AppearanceConfiguration {
   /**
    * True if Atom feed alerts should be shown (subject to most recent article URI)
    */
-  private boolean showAtomFeedAlert = true;
+  private boolean showAtomFeedAlert = false;
 
   /**
    * The URI of the latest read article from the MultiBitOrg Atom feed

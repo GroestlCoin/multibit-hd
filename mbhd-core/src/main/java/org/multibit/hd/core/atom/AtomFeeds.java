@@ -39,7 +39,7 @@ public class AtomFeeds {
       @Override
       public AtomFeed call() throws Exception {
 
-        URL url = new URL("https://multibit.org/atom.xml");
+        URL url = new URL("");
         URLConnection connection = url.openConnection();
 
         try (InputStream is = connection.getInputStream()) {

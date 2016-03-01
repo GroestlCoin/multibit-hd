@@ -42,9 +42,9 @@ public class WelcomeWizard extends AbstractHardwareWalletWizard<WelcomeWizardMod
       WELCOME_SELECT_LANGUAGE.name(),
       new WelcomeSelectLanguagePanelView(this, WELCOME_SELECT_LANGUAGE.name()));
 
-    wizardViewMap.put(
-      WELCOME_ATTACH_HARDWARE_WALLET.name(),
-      new WelcomeAttachHardwareWalletPanelView(this, WELCOME_ATTACH_HARDWARE_WALLET.name()));
+    //wizardViewMap.put(
+    //  WELCOME_ATTACH_HARDWARE_WALLET.name(),
+    //  new WelcomeAttachHardwareWalletPanelView(this, WELCOME_ATTACH_HARDWARE_WALLET.name()));
 
     wizardViewMap.put(
       WELCOME_SELECT_WALLET.name(),
