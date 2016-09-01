@@ -1023,7 +1023,7 @@ public class BitcoinNetworkService extends AbstractService {
             if (!toAddress.equals(sendRequestSummary.getChangeAddress())) {
               // Add to the running total
               totalAmountIncludingTransactionAndClientFee = totalAmountIncludingTransactionAndClientFee.add(transactionOutput.getValue());
-              log.debug("Adding a transaction output amount, total bitcoin is now {}", totalAmountIncludingTransactionAndClientFee.toString());
+              log.debug("Adding a transaction output amount, total groestlcoin is now {}", totalAmountIncludingTransactionAndClientFee.toString());
             } else {
               log.debug("Skipping a transaction output as it is the change address");
             }
@@ -1041,7 +1041,7 @@ public class BitcoinNetworkService extends AbstractService {
       // Sends are negative
       totalAmountIncludingTransactionAndClientFee = totalAmountIncludingTransactionAndClientFee.negate();
 
-      log.debug("Added the transaction fee, bitcoin total is now {}", totalAmountIncludingTransactionAndClientFee.toString());
+      log.debug("Added the transaction fee, groestlcoin total is now {}", totalAmountIncludingTransactionAndClientFee.toString());
 
       // Apply the exchange rate
       BigDecimal localAmount;
@@ -1052,7 +1052,7 @@ public class BitcoinNetworkService extends AbstractService {
       } else {
         localAmount = BigDecimal.ZERO;
       }
-      log.debug("Total transaction bitcoin amount = {}, calculated fiat amount {}", totalAmountIncludingTransactionAndClientFee.toString(), localAmount.toString());
+      log.debug("Total transaction groestlcoin amount = {}, calculated fiat amount {}", totalAmountIncludingTransactionAndClientFee.toString(), localAmount.toString());
       return true;
     } catch (ScriptException e) {
       log.error("Could not process the fiat amount", e);
@@ -1337,7 +1337,7 @@ public class BitcoinNetworkService extends AbstractService {
             Optional.<Coin>absent(),
             false,
             CoreMessageKey.COULD_NOT_CONNECT_TO_BITCOIN_NETWORK,
-            new String[]{"Could not reach any Bitcoin nodes"}
+            new String[]{"Could not reach any Groestlcoin nodes"}
           ));
 
         // Prevent a fall-through to success
